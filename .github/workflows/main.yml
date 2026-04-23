@@ -1,0 +1,29 @@
+name: Build Check on PR to main
+
+on:
+  pull_request:
+    branches:
+      - main # Cambia questo sezione in base al tuo branch principale
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.11.x
+
+    - name: Install Dependencies
+      run: |
+        npm ci
+
+    - name: Build Project
+      run: |
+        npm run build
+
+
