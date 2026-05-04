@@ -10,8 +10,9 @@
     <!-- Menu per dispositivi desktop -->
     <nav class="hidden lg:flex">
       <ul class="flex space-x-4">
-        <li><NuxtLink to="/" class="hover:border-b-2 text text-lg">Home</NuxtLink></li>
+        <li><NuxtLink to="/" class="hover:border-b-2 text-lg">Home</NuxtLink></li>
         <li><NuxtLink to="/comitato" class="hover:border-b-2 text-lg">Il Comitato</NuxtLink></li>
+        <li><NuxtLink to="/news" class="hover:border-b-2 text-lg">Notizie</NuxtLink></li>
         <li><NuxtLink to="/contatti" class="hover:border-b-2 text-lg">Contatti</NuxtLink></li>
         <li><a href="https://www.aicsnetwork.net/" class="hover:border-b-2 text-lg">Tesseramento AICS</a></li>
 
@@ -23,8 +24,9 @@
       <ul class="flex flex-col space-y-2 p-3">
         <li><NuxtLink @click="onClickNavLink" to="/" class="text-white hover:border-b-2" >Home</NuxtLink></li>
         <li><NuxtLink @click="onClickNavLink" to="/comitato" class="text-white hover:border-b-2">Il Comitato</NuxtLink></li>
+        <li><NuxtLink @click="onClickNavLink" to="/news" class="text-white hover:border-b-2">Notizie</NuxtLink></li>
         <li><NuxtLink @click="onClickNavLink" to="/contatti" class="text-white hover:border-b-2">Contatti</NuxtLink></li>
-        <li><a href="https://www.aicsnetwork.net/" class="hover:border-b-2">Tesseramento AICS</a></li>
+        <li><a @click="onClickNavLink" href="https://www.aicsnetwork.net/" class="text-white hover:border-b-2">Tesseramento AICS</a></li>
       </ul>
     </div>
   </div>

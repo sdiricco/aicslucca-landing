@@ -1,9 +1,10 @@
 <template>
-  <div class=" ">
-    <HomeChiSiamo/>
-  <HomeAicsAppSection/>
-  <HomeAppFeature/>
-  <HomeAicsPhotoGallery/>
-  <HomeSocialSection/>
+  <div>
+    <HomeLatestNews />
+    <HomeChiSiamo />
+    <HomeAicsAppSection />
+    <HomeAppFeature />
+    <HomeAicsPhotoGallery />
+    <HomeSocialSection />
   </div>
 </template>
