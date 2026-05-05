@@ -1,76 +1,106 @@
-# Nuxt 3 Minimal Starter
+# AICS Lucca — Landing Page
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Sito web istituzionale dell'associazione **AICS Lucca** (Associazione Italiana Cultura e Sport). Realizzato con **Nuxt 3** e **Tailwind CSS**.
 
-## Setup
+---
 
-Make sure to install the dependencies:
+## Stack tecnologico
+
+| Tool | Versione | Ruolo |
+|---|---|---|
+| [Nuxt 3](https://nuxt.com) | ^3.7 | Framework Vue SSR/SSG |
+| [Vue 3](https://vuejs.org) | ^3.3 | UI framework |
+| [Tailwind CSS](https://tailwindcss.com) | via `@nuxtjs/tailwindcss` | Styling utility-first |
+| [VueUse](https://vueuse.org) | ^10.9 | Composable utilities |
+
+---
+
+## Struttura del progetto
+
+```
+aicslucca-landing/
+├── app.vue                  # Entry point: avvolge tutto con <NuxtLayout> + <NuxtPage>
+├── nuxt.config.ts           # Configurazione Nuxt (moduli: tailwindcss, vueuse)
+├── tailwind.config.ts       # Palette colori personalizzata (rosso primario, blu scuro)
+│
+├── layouts/
+│   └── default.vue          # Layout comune: Header sticky + <slot> + Footer
+│
+├── pages/                   # Routing file-system di Nuxt
+│   ├── index.vue            # Homepage (/)
+│   ├── comitato/            # Pagina comitato (/comitato)
+│   ├── contatti/            # Pagina contatti (/contatti)
+│   └── privacy/             # Pagina privacy policy (/privacy)
+│
+├── components/
+│   ├── Home/                # Componenti della homepage
+│   │   ├── Header.vue       # Navbar principale (usata nel layout)
+│   │   ├── HeroVideo.vue    # Sezione hero con video
+│   │   ├── Hero.vue         # Sezione hero alternativa
+│   │   ├── Content.vue      # Contenuto principale della home
+│   │   ├── ChiSiamo.vue     # Sezione "Chi siamo"
+│   │   ├── SocialSection.vue# Link ai social
+│   │   ├── AicsAppSection.vue  # Sezione promozione app AICS
+│   │   ├── AppFeature.vue   # Feature singola dell'app
+│   │   └── AicsPhotoGallery.vue # Galleria fotografica
+│   ├── Comitato/
+│   │   └── Content.vue      # Contenuto pagina comitato
+│   ├── Contatti/
+│   │   ├── Location.vue     # Info indirizzo/recapiti
+│   │   └── Map.vue          # Mappa embed
+│   ├── privacy/
+│   │   └── Content.vue      # Testo privacy policy
+│   ├── Footer.vue           # Footer globale
+│   └── HeroSection.vue      # Componente hero generico riutilizzabile
+│
+├── assets/
+│   ├── css/                 # Stili globali
+│   ├── icons/               # Icone SVG/PNG
+│   ├── images/              # Immagini statiche
+│   └── video/               # Video (usati nella hero)
+│
+└── public/                  # File serviti staticamente (favicon, ecc.)
+```
+
+---
+
+## Palette colori (Tailwind)
+
+I colori personalizzati sono definiti in `tailwind.config.ts`:
+
+| Classe | Hex | Uso |
+|---|---|---|
+| `primary` | `#900001` | Rosso principale AICS |
+| `primaryLighter` | `#b40000` | Variante chiara |
+| `primaryLight` | `#d20000` | Variante più chiara |
+| `primaryDark` | `#183462` | Blu scuro |
+| `secondaryAccent` | `#318343` | Verde accento |
+| `paragraphText` | `#6b7280` | Testo paragrafo (grigio) |
+
+---
+
+## Avvio in sviluppo
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+# → http://localhost:3000
 ```
 
-## Production
-
-Build the application for production:
+## Build produzione
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+npm run build    # build SSR
+npm run generate # build statica (SSG)
+npm run preview  # anteprima build
 ```
 
-Locally preview production build:
+---
 
-```bash
-# npm
-npm run preview
+## Convenzioni per agenti AI
 
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# Nuxt3-tailwind-primevue-bolierplate
+- **Aggiungere una nuova pagina**: creare `pages/<nome>/index.vue` e il relativo componente in `components/<Nome>/Content.vue`.
+- **Modificare stili globali**: usare le classi Tailwind con i colori personalizzati (`primary`, `primaryDark`, ecc.) definiti in `tailwind.config.ts`. Non usare colori hardcoded.
+- **Componenti**: ogni pagina compone componenti da `components/`. Il layout globale (Header + Footer) è in `layouts/default.vue` e non va replicato nelle pagine.
+- **Head/SEO**: usare `useHead()` in ogni `<script setup>` di pagina per impostare titolo e meta.
+- **Nessun CSS framework aggiuntivo**: usare solo Tailwind. Non introdurre altre librerie UI senza indicazione esplicita.
