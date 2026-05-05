@@ -5,6 +5,7 @@
     <HomeAicsAppSection />
     <HomeAppFeature />
     <HomeAicsPhotoGallery />
+    <HomeLocandineCarousel />
     <HomeSocialSection />
   </div>
 </template>
