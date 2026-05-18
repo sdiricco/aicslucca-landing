@@ -20,11 +20,21 @@
 </template>
 
 <script setup lang="ts">
+import groq from 'groq'
 import type { Post } from '~/types/post'
 
 useHead({ title: 'Notizie & Eventi — AICS Lucca' })
 
-const posts = ref<Post[]>([])
-const pending = ref(false)
-const error = ref(null)
+const query = groq`
+  *[_type == "post"] | order(publishedAt desc) {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    category,
+    coverImage,
+    excerpt
+  }
+`
+
+const { data: posts, pending, error } = await useSanityQuery<Post[]>(query)
 </script>

@@ -13,7 +13,19 @@
 </template>
 
 <script setup lang="ts">
+import groq from 'groq'
 import type { Post } from '~/types/post'
 
-const posts = ref<Post[]>([])
+const query = groq`
+  *[_type == "post"] | order(publishedAt desc)[0..2] {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    category,
+    coverImage,
+    excerpt
+  }
+`
+
+const { data: posts } = await useSanityQuery<Post[]>(query)
 </script>

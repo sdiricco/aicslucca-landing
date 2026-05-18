@@ -35,7 +35,7 @@
         <!-- Immagine copertina -->
         <img
           v-if="post.coverImage"
-          :src="post.coverImage as string"
+          :src="coverImageUrl"
           :alt="post.title"
           width="1200"
           height="630"
@@ -43,9 +43,9 @@
           class="mt-6 w-full rounded-xl object-cover max-h-96"
         />
 
-        <!-- Corpo articolo -->
+        <!-- Corpo articolo (Portable Text) -->
         <div v-if="post.body" class="mt-8 prose prose-lg max-w-none">
-          <p>{{ post.body }}</p>
+          <PortableText :value="post.body" />
         </div>
       </article>
 
@@ -57,18 +57,31 @@
 </template>
 
 <script setup lang="ts">
+import groq from 'groq'
 import type { Post } from '~/types/post'
 
 const route = useRoute()
 const slug = route.params.slug as string
 
-const post = ref<Post | null>(null)
-const pending = ref(false)
-const error = ref(null)
+const query = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    category,
+    coverImage,
+    excerpt,
+    body
+  }
+`
 
-if (!post.value) {
+const { data: post, pending, error } = await useSanityQuery<Post | null>(query, { slug })
+
+if (!pending.value && !post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Articolo non trovato' })
 }
+
+const { urlFor } = useSanityImageUrl()
 
 useHead(() => ({
   title: post.value ? `${post.value.title} — AICS Lucca` : 'AICS Lucca',
@@ -77,8 +90,17 @@ useHead(() => ({
     { property: 'og:title', content: post.value.title },
     { property: 'og:description', content: post.value.excerpt ?? '' },
     { property: 'og:type', content: 'article' },
+    ...(post.value.coverImage
+      ? [{ property: 'og:image', content: urlFor(post.value.coverImage).width(1200).height(630).fit('crop').url() }]
+      : []),
   ] : [],
 }))
+
+const coverImageUrl = computed(() =>
+  post.value?.coverImage
+    ? urlFor(post.value.coverImage).width(1200).height(630).fit('crop').url()
+    : undefined
+)
 
 const formattedDate = computed(() => {
   if (!post.value) return ''
