@@ -95,24 +95,9 @@
 </template>
 
 <script setup lang="ts">
-import groq from 'groq'
 import type { Locandina } from '~/types/locandina'
 
-const query = groq`
-  *[_type == "locandina"] | order(dataEvento desc) {
-    _id,
-    titolo,
-    "immagine": {
-      "asset": {
-        "url": immagine.asset->url
-      }
-    },
-    dataEvento,
-    descrizione
-  }
-`
-
-const { data: locandine } = await useSanityQuery<Locandina[]>(query)
+const locandine = ref<Locandina[]>([])
 
 // Carousel state
 const currentIndex = ref(0)

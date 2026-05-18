@@ -1,11 +1,9 @@
-import type { SanityImageSource } from '@sanity/image-url'
-
 export interface Post {
   title: string
   slug: string
   publishedAt: string
   category: 'evento' | 'notizia'
-  coverImage?: SanityImageSource
+  coverImage?: string
   excerpt?: string
-  body?: unknown[]
+  body?: string
 }

@@ -49,28 +49,13 @@
 </template>
 
 <script setup lang="ts">
-import groq from 'groq'
 import type { Documento } from '~/types/documento'
 
 useHead({ title: 'Documenti — AICS Lucca' })
 
-const query = groq`
-  *[_type == "documento"] | order(anno desc) {
-    _id,
-    title,
-    categoria,
-    anno,
-    "file": {
-      "asset": {
-        "_ref": file.asset._ref,
-        "url": file.asset->url
-      }
-    },
-    descrizione
-  }
-`
-
-const { data: documenti, pending, error } = await useSanityQuery<Documento[]>(query)
+const documenti = ref<Documento[]>([])
+const pending = ref(false)
+const error = ref(null)
 
 const categorieOrdinate = [
   { value: 'bilancio', label: 'Bilanci' },
